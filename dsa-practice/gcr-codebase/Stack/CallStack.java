@@ -1,0 +1,63 @@
+public class CallStack {
+
+    private static class Frame {
+
+        String functionName;
+        Frame next;
+
+        Frame(String functionName, Frame next) {
+            this.functionName = functionName;
+            this.next = next;
+        }
+    }
+
+    private Frame top;
+
+    public CallStack() {
+        top = null;
+    }
+
+    public void push(String functionName) {
+        top = new Frame(functionName, top);
+    }
+
+    public String pop() {
+
+        if (isEmpty()) {
+            throw new RuntimeException("No Active Function");
+        }
+
+        String function = top.functionName;
+        top = top.next;
+
+        return function;
+    }
+
+    public String peek() {
+
+        if (isEmpty()) {
+            throw new RuntimeException("Stack Empty");
+        }
+
+        return top.functionName;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    public static void main(String[] args) {
+
+        CallStack stack = new CallStack();
+
+        stack.push("main()");
+        stack.push("login()");
+        stack.push("validateUser()");
+
+        System.out.println(stack.peek());
+
+        System.out.println(stack.pop());
+
+        System.out.println(stack.peek());
+    }
+}

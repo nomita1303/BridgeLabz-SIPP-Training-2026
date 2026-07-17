@@ -1,0 +1,41 @@
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
+
+public class NextGreaterElement {
+
+    public int[] nextBusierDay(int[] visitors) {
+
+        int n = visitors.length;
+
+        int[] answer = new int[n];
+
+        Arrays.fill(answer, -1);
+
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < n; i++) {
+
+            while (!stack.isEmpty() &&
+                    visitors[i] > visitors[stack.peek()]) {
+
+                answer[stack.pop()] = visitors[i];
+            }
+
+            stack.push(i);
+        }
+
+        return answer;
+    }
+
+    public static void main(String[] args) {
+
+        NextGreaterElement obj = new NextGreaterElement();
+
+        int[] visitors = {10, 5, 12, 8, 20};
+
+        int[] result = obj.nextBusierDay(visitors);
+
+        System.out.println(Arrays.toString(result));
+    }
+}
